@@ -5,6 +5,8 @@ import com.app.app.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 
 @Service
 public class UserService {
@@ -16,8 +18,16 @@ public class UserService {
         return userMapper.add(user);
     }
 
-    public User getUser(String name) {
+    public Collection<User> getUsers(){
+        return userMapper.getUsers();
+    }
+
+    public User getUserByName(String name) {
         return userMapper.getUserByName(name);
+    }
+
+    public User getUserById(int id){
+        return userMapper.getUserById(id);
     }
 
     public boolean isUserExisted(String name) {
@@ -28,8 +38,9 @@ public class UserService {
         }
     }
 
-    public int updateBasicMsg(User user) {
-        return userMapper.updateBasicMsg(user);
+
+    public int updateBasicMsg(String param, String value, int id) {
+        return userMapper.updateUserMsg(param, value, id);
     }
 
     public int updateUserP(int id, String password) {

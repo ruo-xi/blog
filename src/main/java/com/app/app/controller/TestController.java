@@ -15,14 +15,9 @@ public class TestController {
     @Autowired
     RedisTemplate redisTemplate;
 
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "/401")
     public String test() {
-        User user = new User();
-        user.setName("caoxiaoyu");
-        user.setPassword("cao19981128");
-        user.setAddress("你猜");
-        redisTemplate.opsForValue().set("user", user);
 
-        return ResultBean.success(user).toJsonString();
+        return "401";
     }
 }

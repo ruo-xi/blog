@@ -21,8 +21,8 @@ public class UserController {
         return "lalala";
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public String signUp(@RequestParam("name") String name, @RequestParam("password") String password) {
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    public String regist(@RequestParam("name") String name, @RequestParam("password") String password) {
         if (userService.isUserExisted(name)) {
             return JSON.toJSONString(ResultBean.error(0, "用户已存在"));
         } else {
@@ -37,32 +37,35 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public String getUsers(){
+        return ResultBean.success(userService.getUsers()).toJsonString();
+    }
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/name", method = RequestMethod.GET)
     public String getUser(@RequestParam("name") String name) {
-        if (null == userService.getUser(name)) {
+        if (null == userService.getUserByName(name)) {
             return ResultBean.error(1, "用户不存在").toJsonString();
         } else {
-            return ResultBean.success(userService.getUser(name)).toJsonString();
+            return ResultBean.success(userService.getUserByName(name)).toJsonString();
         }
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-    public String updateUserBasicMsg(@PathVariable("id") int id, @RequestParam("name") String name, @RequestParam("address") String address, @RequestParam("sex") String sex, @RequestParam("intro") String intro) {
-        User user = new User();
-        user.setId(id);
-        user.setName(name);
-        user.setAddress(address);
-        user.setSex(sex);
-        user.setIntro(intro);
-        if (userService.updateBasicMsg(user) > 0) {
+    @RequestMapping(value = "/users/{id}")
+    public String getUser(@PathVariable("id") int id){
+           return ResultBean.success(userService.getUserById(id)).toString();
+    }
+
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.PUT)
+    public String updateUserBasicMsg(@PathVariable("id") int id, @RequestParam("param") String param, @RequestParam("value") String value) {
+        if (userService.updateBasicMsg(param, value, id) > 0) {
             return ResultBean.success().toJsonString();
         } else {
             return ResultBean.error(0, "未知错误").toJsonString();
         }
     }
 
-    @RequestMapping(value = "/user/{id}/password", method = RequestMethod.PUT)
+    @RequestMapping(value = "/users/{id}/password", method = RequestMethod.PUT)
     public String updateUserP(@PathVariable("id") int id, @RequestParam("password") String password) {
         userService.updateUserP(id,password);
         return ResultBean.success().toString();

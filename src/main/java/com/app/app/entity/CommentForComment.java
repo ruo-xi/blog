@@ -1,5 +1,7 @@
 package com.app.app.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 public class CommentForComment {
@@ -7,6 +9,7 @@ public class CommentForComment {
     int commentId;
     int userId;
     int replyUserId;
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     Date createDate;
     int likeCounts;
 

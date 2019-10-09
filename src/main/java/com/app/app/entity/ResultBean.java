@@ -1,17 +1,19 @@
 package com.app.app.entity;
 
 import com.alibaba.fastjson.JSON;
+import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.Collection;
+    import java.util.Collection;
 
+@Data
 public class ResultBean<T> {
     public static final int SUCCESSFUL = 1;
     public static final int ERROR = 0;
 
     private int code;
     private String msg;
-    private Collection<T> data;
+    private T data;
+    private Collection<T> datas;
 
     public static ResultBean error(int code, String msg) {
         ResultBean resultBean = new ResultBean();
@@ -29,43 +31,24 @@ public class ResultBean<T> {
 
     public static <T> ResultBean<T> success(Collection<T> data) {
         ResultBean resultBean = success();
-        resultBean.setData(data);
+        resultBean.setDatas(data);
         return resultBean;
     }
 
     public static <T> ResultBean<T> success(T t) {
         ResultBean resultBean = success();
-        ArrayList<T> data = new ArrayList<>();
-        data.add(t);
-        return success(data);
+        resultBean.setData(t);
+        return resultBean;
     }
+
+
 
     public String toJsonString() {
         return JSON.toJSONString(this);
     }
 
-
-    public int getCode() {
-        return code;
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Collection<T> getData() {
-        return data;
-    }
-
-    public void setData(Collection<T> data) {
-        this.data = data;
-    }
 }

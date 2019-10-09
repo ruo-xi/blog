@@ -1,24 +1,34 @@
 package com.app.app.config;
 
-import com.app.app.dao.UserMapper;
+import com.app.app.entity.JWTToken;
 import com.app.app.entity.User;
+import com.app.app.service.UserService;
+import com.app.app.util.JWTUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@Slf4j
 public class ShiroRealm extends AuthorizingRealm {
 
+
     @Autowired
-    UserMapper userMapper;
+    UserService userService;
 
     /**
     *授权
     **/
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        log.info("逻辑授权");
         return null;
+    }
+
+    public boolean supports(AuthenticationToken authenticationToken){
+        return authenticationToken instanceof JWTToken;
     }
 
 
@@ -26,23 +36,27 @@ public class ShiroRealm extends AuthorizingRealm {
      * 认证
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        String userName = (String) token.getPrincipal();
-        String userPsw = new String((char[])  token.getCredentials());
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
 
-        System.out.println("用户:" + userName + " 认证-----ShiroRealm.doGetAuthenticationInfo");
+        String token = (String) auth.getCredentials();
+        String userName = JWTUtil.getUserName(token);
 
-        User user = userMapper.getUserByName(userName);
+        log.info("用户:" + userName + " 认证-----ShiroRealm.doGetAuthenticationInfo");
 
-        if(null == user){
-            throw new UnknownAccountException("用户名或密码错误");
-        }
-        if(!userPsw.equals(user.getPassword())){
-            throw new IncorrectCredentialsException("用户名或密码错误");
+        if (userName == null) {
+            throw new AuthenticationException("token invalid");
         }
 
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user,userPsw,getName());
 
-        return info;
+        User userBean = userService.getUserByName(userName);
+        if (userBean == null) {
+            throw new AuthenticationException("User didn't existed!");
+        }
+
+        if (! JWTUtil.vertify(token, userName, userBean.getPassword())) {
+            throw new AuthenticationException("Username or password error");
+        }
+
+        return new SimpleAuthenticationInfo(token, token, "my_realm");
     }
 }

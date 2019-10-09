@@ -1,5 +1,7 @@
 package com.app.app.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 import java.io.Serializable;
 
@@ -14,7 +16,9 @@ public class User {
     String address;
     String sex;
     String intro;
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     Date createDate;
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     Date updateDate;
     int followCount;
     int fanCount;
