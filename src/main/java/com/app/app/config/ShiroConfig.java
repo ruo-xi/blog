@@ -17,13 +17,13 @@ public class ShiroConfig {
 
 
     @Bean
-    ShiroRealm shiroRealm(){
+    ShiroRealm shiroRealm() {
         ShiroRealm shiroRealm = new ShiroRealm();
         return shiroRealm;
     }
 
     @Bean
-    SecurityManager securityManager(){
+    SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(shiroRealm());
         return securityManager;
@@ -31,7 +31,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager){
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
         LinkedHashMap<String, Filter> filterMap = new LinkedHashMap<>();
@@ -40,10 +40,10 @@ public class ShiroConfig {
 
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        LinkedHashMap<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
+        LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
 
-        filterChainDefinitionMap.put("/**", "jwt");
+//        filterChainDefinitionMap.put("/**", "jwt");
 
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");

@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String getUsers(){
+    public String getUsers() {
         return ResultBean.success(userService.getUsers()).toJsonString();
     }
 
@@ -52,12 +52,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/{id}")
-    public String getUser(@PathVariable("id") int id){
-           return ResultBean.success(userService.getUserById(id)).toString();
+    public String getUser(@PathVariable("id") Integer id) {
+        return ResultBean.success(userService.getUserById(id)).toString();
     }
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.PUT)
-    public String updateUserBasicMsg(@PathVariable("id") int id, @RequestParam("param") String param, @RequestParam("value") String value) {
+    public String updateUserBasicMsg(@PathVariable("id") Integer id, @RequestParam("param") String param, @RequestParam("value") String value) {
         if (userService.updateBasicMsg(param, value, id) > 0) {
             return ResultBean.success().toJsonString();
         } else {
@@ -66,8 +66,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/{id}/password", method = RequestMethod.PUT)
-    public String updateUserP(@PathVariable("id") int id, @RequestParam("password") String password) {
-        userService.updateUserP(id,password);
+    public String updateUserP(@PathVariable("id") Integer id, @RequestParam("password") String password) {
+        userService.updateUserP(id, password);
         return ResultBean.success().toString();
     }
 

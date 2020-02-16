@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class User {
 
 
-    int id;
+    Integer id;
     String password;
     String mail;
     String phoneNumber;
@@ -20,15 +20,15 @@ public class User {
     Date createDate;
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     Date updateDate;
-    int followCount;
-    int fanCount;
+    Integer followCount;
+    Integer fanCount;
     String avatarUrl;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -104,19 +104,19 @@ public class User {
         this.updateDate = updateDate;
     }
 
-    public int getFollowCount() {
+    public Integer getFollowCount() {
         return followCount;
     }
 
-    public void setFollowCount(int followCount) {
+    public void setFollowCount(Integer followCount) {
         this.followCount = followCount;
     }
 
-    public int getFanCount() {
+    public Integer getFanCount() {
         return fanCount;
     }
 
-    public void setFanCount(int fanCount) {
+    public void setFanCount(Integer fanCount) {
         this.fanCount = fanCount;
     }
 

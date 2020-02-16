@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 public class Role {
-    private int id;
+    private Integer id;
     private String name;
 
-    public Role(int id, String name) {
+    public Role(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

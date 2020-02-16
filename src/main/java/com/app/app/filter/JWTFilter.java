@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author ruo-xi
+ */
 @Slf4j
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
@@ -28,21 +31,20 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         String authorization = req.getHeader("Authorization");
         JWTToken token = new JWTToken(authorization);
         try {
-            getSubject(request,response).login(token);
-        }catch (Exception e){
+            getSubject(request, response).login(token);
+        } catch (Exception e) {
             request.getRequestDispatcher("/401").forward(request, response);
         }
         return true;
     }
 
 
-
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if(isLoginAttempt(request, response)){
+        if (isLoginAttempt(request, response)) {
             try {
                 executeLogin(request, response);
-            }catch (Exception e){
+            } catch (Exception e) {
                 response401(request, response);
             }
         }

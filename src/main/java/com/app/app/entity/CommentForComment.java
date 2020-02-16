@@ -5,43 +5,43 @@ import com.alibaba.fastjson.annotation.JSONField;
 import java.util.Date;
 
 public class CommentForComment {
-    int id;
-    int commentId;
-    int userId;
-    int replyUserId;
+    Integer id;
+    Integer commentId;
+    Integer userId;
+    Integer replyUserId;
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     Date createDate;
-    int likeCounts;
+    Integer likeCounts;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getCommentId() {
+    public Integer getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(int commentId) {
+    public void setCommentId(Integer commentId) {
         this.commentId = commentId;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getReplyUserId() {
+    public Integer getReplyUserId() {
         return replyUserId;
     }
 
-    public void setReplyUserId(int replyUserId) {
+    public void setReplyUserId(Integer replyUserId) {
         this.replyUserId = replyUserId;
     }
 
@@ -53,11 +53,11 @@ public class CommentForComment {
         this.createDate = createDate;
     }
 
-    public int getLikeCounts() {
+    public Integer getLikeCounts() {
         return likeCounts;
     }
 
-    public void setLikeCounts(int likeCounts) {
+    public void setLikeCounts(Integer likeCounts) {
         this.likeCounts = likeCounts;
     }
 }

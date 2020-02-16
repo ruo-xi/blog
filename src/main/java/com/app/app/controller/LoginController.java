@@ -17,17 +17,27 @@ public class LoginController {
     UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam("name") String name, @RequestParam("pwd") String pwd){
+    public String login(@RequestParam("name") String name, @RequestParam("password") String pwd) {
         User user = userService.getUserByName(name);
 
-        if(null == user){
+        if (null == user) {
             return ResultBean.error(ResultBean.ERROR, "不存在此用户").toString();
         }
 
-        if(user.getPassword().equals(pwd)){
-            return ResultBean.success(JWTUtil.sign(name, pwd)).toString();
-        }else {
-            return ResultBean.error(ResultBean.ERROR,"密码错误").toString();
-        }
+        Integer id = userService.getIdByNP(name, pwd);
+
+        return ResultBean.success(id).toString();
+
+//        if(user.getPassword().equals(pwd)){
+//            return ResultBean.success(JWTUtil.sign(name, pwd, id)).toString();
+//        }else {
+//            return ResultBean.error(ResultBean.ERROR,"密码错误").toString();
+//        }
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public String logout(@RequestParam("id") Integer id) {
+        //todo
+        return "";
     }
 }

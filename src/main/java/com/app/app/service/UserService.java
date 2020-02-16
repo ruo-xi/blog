@@ -14,11 +14,11 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public int addUser(User user) {
+    public Integer addUser(User user) {
         return userMapper.add(user);
     }
 
-    public Collection<User> getUsers(){
+    public Collection<User> getUsers() {
         return userMapper.getUsers();
     }
 
@@ -26,7 +26,7 @@ public class UserService {
         return userMapper.getUserByName(name);
     }
 
-    public User getUserById(int id){
+    public User getUserById(Integer id) {
         return userMapper.getUserById(id);
     }
 
@@ -38,12 +38,15 @@ public class UserService {
         }
     }
 
+    public Integer getIdByNP(String name, String password) {
+        return userMapper.getIdByNP(name, password);
+    }
 
-    public int updateBasicMsg(String param, String value, int id) {
+    public Integer updateBasicMsg(String param, String value, Integer id) {
         return userMapper.updateUserMsg(param, value, id);
     }
 
-    public int updateUserP(int id, String password) {
+    public Integer updateUserP(Integer id, String password) {
         return userMapper.updateUserP(id, password);
     }
 }

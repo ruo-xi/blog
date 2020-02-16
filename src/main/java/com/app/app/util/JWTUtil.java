@@ -12,23 +12,24 @@ import java.util.Date;
 
 public class JWTUtil {
 
-    private  static final long  EXPRIE_TIME = 24 * 60 * 60 * 1000;
+    private static final long EXPRIE_TIME = 24 * 60 * 60 * 1000;
 
-    public static String sign(String userName, String userPwd){
+    public static String sign(String userName, String userPwd, Integer userId) {
         try {
             Date date = new Date(System.currentTimeMillis() + EXPRIE_TIME);
             Algorithm algorithm = Algorithm.HMAC256(userPwd);
 
             return JWT.create()
+                    .withClaim("userId", userId)
                     .withClaim("userName", userName)
                     .withExpiresAt(date)
                     .sign(algorithm);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
-    public static boolean vertify(String token, String userName, String userPwd){
+    public static boolean vertify(String token, String userName, String userPwd) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(userPwd);
             JWTVerifier verifier = JWT.require(algorithm)
@@ -37,19 +38,40 @@ public class JWTUtil {
 
             DecodedJWT jwt = verifier.verify(token);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
-    public static String getUserName(String token){
+
+    public static boolean vertify(String token, Integer userId, String userPwd) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(userPwd);
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withClaim("userId", userId)
+                    .build();
+
+            DecodedJWT jwt = verifier.verify(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static String getUserName(String token) {
         try {
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim("userName").asString();
-        }catch (JWTDecodeException e){
+        } catch (JWTDecodeException e) {
             return null;
         }
     }
 
-
-
+    public static Integer getUserId(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim("userId").asInt();
+        } catch (JWTDecodeException e) {
+            return 0;
+        }
+    }
 }

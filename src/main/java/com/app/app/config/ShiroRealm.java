@@ -19,15 +19,17 @@ public class ShiroRealm extends AuthorizingRealm {
     UserService userService;
 
     /**
-    *授权
-    **/
+     * 授权
+     **/
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         log.info("逻辑授权");
         return null;
     }
 
-    public boolean supports(AuthenticationToken authenticationToken){
+
+    @Override
+    public boolean supports(AuthenticationToken authenticationToken) {
         return authenticationToken instanceof JWTToken;
     }
 
@@ -39,21 +41,21 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
 
         String token = (String) auth.getCredentials();
-        String userName = JWTUtil.getUserName(token);
+        Integer userId = JWTUtil.getUserId(token);
 
-        log.info("用户:" + userName + " 认证-----ShiroRealm.doGetAuthenticationInfo");
+        log.info("用户:" + userId + " 认证-----ShiroRealm.doGetAuthenticationInfo");
 
-        if (userName == null) {
+        if (userId == 0) {
             throw new AuthenticationException("token invalid");
         }
 
 
-        User userBean = userService.getUserByName(userName);
+        User userBean = userService.getUserById(userId);
         if (userBean == null) {
             throw new AuthenticationException("User didn't existed!");
         }
 
-        if (! JWTUtil.vertify(token, userName, userBean.getPassword())) {
+        if (!JWTUtil.vertify(token, userId, userBean.getPassword())) {
             throw new AuthenticationException("Username or password error");
         }
 

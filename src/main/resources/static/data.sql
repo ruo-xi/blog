@@ -99,7 +99,14 @@ CREATE TABLE `category` (
     `cate_name` varchar(255) NOT NULL,
     `cate_desc` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role`(
+    `id` int(11) unsigned NOT NULL ,
+    `name` varchar(255) NOT NULL ,
+    CONSTRAINT `role_ibfk` FOREIGN KEY (`id`) REFERENCES `user`(`id`)
+)ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 
 

@@ -21,7 +21,6 @@ repositories {
 dependencies {
     compile 'org.apache.commons:commons-pool2:2.7.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
     implementation 'com.alibaba:fastjson:1.2.58'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'

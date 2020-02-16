@@ -1,15 +1,15 @@
 package com.app.app.entity;
 
 public class Category {
-    int id;
+    Integer id;
     String cateName;
     String cateDesc;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
